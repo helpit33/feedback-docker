@@ -48,8 +48,8 @@ services:
       dockerfile: "./docker/src/db/Dockerfile"
     restart: always
     environment:
-        POSTGRES_USER: feedback
-        POSTGRES_PASSWORD: password
-        POSTGRES_DB: testdb
+        POSTGRES_USER: "${DB_USER}"
+        POSTGRES_PASSWORD: "${DB_PASSWORD}"
+        POSTGRES_DB: "${DB_NAME}"
     ports:
         - 15432:5432

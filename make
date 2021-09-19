@@ -23,7 +23,7 @@ create(){
     cd ..
 }
 init(){
-    docker exec -it feedback-app ./init
+    docker exec -it feedback-app ./init --env=Development --overwrite=n
 }
 install(){
     create
@@ -40,10 +40,10 @@ update(){
     docker exec -it feedback-app composer update
 }
 migrate(){
-    docker exec -it feedback-app ./yii migrate
+    docker exec -it feedback-app ./yii migrate --interactive=0
 }
 apply-fixtures(){
-    docker exec -it feedback-app ./yii fixture/load '*'
+    docker exec -it feedback-app ./yii fixture/load '*' --interactive=0
 }
 run-tests(){
     docker exec -it feedback-app ./vendor/bin/codecept run
