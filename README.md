@@ -21,6 +21,7 @@ make apply-fixtures
 Будут применены UserFixture и FeedbackFixture.
 ```
 4. Запуск тестов осуществляется командой:
+```
 make run-tests
 ```
 ## Удаление
