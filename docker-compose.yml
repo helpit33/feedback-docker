@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  balancer:
+    image: "${APP_NAME}-balancer:${VERSION}"
+    restart: always
+    build:
+      context: ./
+      dockerfile: "./docker/src/balancer/Dockerfile"
+    volumes:
+      - "./docker/src/balancer/conf.d:/etc/nginx/conf.d:ro"
+      - "./docker/logs/balancer:/var/log/nginx"
+    expose:
+      - "8888"
+    ports:
+      - "8888:8888"
+    links:
+      - "web"
+  web:
+    image: "${APP_NAME}-web:${VERSION}"
+    build:
+      context: ./
+      dockerfile: "./docker/src/web/Dockerfile"
+    volumes:
+      - "./app:/app"
+      - "./docker/src/web/conf.d:/etc/nginx/conf.d:ro"
+      - "./docker/logs/dev:/var/log/nginx"
+    expose:
+      - "80"
+    links:
+      - "app"
+    ports:
+      - "80:80"
+  app:
+    image: "${APP_NAME}-app:${VERSION}"
+    container_name: "${APP_NAME}-app"
+    build:
+      context: ./
+      dockerfile: "./docker/src/app/Dockerfile"
+    volumes:
+      - "./app:/app"
+    links:
+      - "db"
+  db:
+    image: "${APP_NAME}-db:${VERSION}"
+    build:
+      context: ./
+      dockerfile: "./docker/src/db/Dockerfile"
+    restart: always
+    environment:
+        POSTGRES_USER: feedback
+        POSTGRES_PASSWORD: password
+        POSTGRES_DB: testdb
+    ports:
+        - 15432:5432
