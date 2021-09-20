@@ -18,7 +18,7 @@ http://localhost:8888
 ```
 make apply-fixtures
 ```
-Будут применены UserFixture и FeedbackFixture.
+Будут применены UserFixture и FeedbackFixture. Доступ в административную часть: admin/admin
 
 4. Запуск тестов осуществляется командой:
 ```
